@@ -3,8 +3,9 @@ name: bibit_technical_test
 sdkPath: .fvm/flutter_sdk
 
 packages:
-  - application/*
+  - alarm/*
   - analog_clock/*
+  - application/*
   
 scripts:
   get:
