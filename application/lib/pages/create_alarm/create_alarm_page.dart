@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/create_alarm/create_alarm_cubit.dart';
 import '../../models/time_type.dart';
+import '../alarm_history/alarm_history_page.dart';
 
 part 'wrapper.dart';
 
@@ -18,6 +19,18 @@ class CreateAlarmPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create alarm page'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const AlarmHistoryPage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.history),
+          ),
+        ],
       ),
       body: BlocBuilder<CreateAlarmCubit, CreateAlarmState>(
         builder: (context, state) {
