@@ -1,9 +1,10 @@
 import 'package:alarm/alarm.dart';
 import 'package:analog_clock/analog_clock.dart';
-import 'package:bibit_technical_test/blocs/cubit/create_alarm_cubit.dart';
-import 'package:bibit_technical_test/models/time_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../blocs/create_alarm/create_alarm_cubit.dart';
+import '../../models/time_type.dart';
 
 part 'wrapper.dart';
 
