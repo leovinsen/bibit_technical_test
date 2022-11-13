@@ -58,17 +58,14 @@ class LocalAlarmRepository implements AlarmRepository {
     }
   }
 
-  /// Sets the seconds elapsed before an alarm is opened. Use this
-  /// when user opens an alarm notification to mark it as opened.
+  /// Marks an alarm as opened. Will automatically calculate seconds elapsed
+  /// from time of creation to current time i.e. [DateTime.now].
   ///
-  /// [alarmId] is the unique identifier of the alarm to be updated, and
-  /// [secondsElapsed] is the number of seconds taken before the alarm
-  /// is opened.
+  /// [alarmId] is the unique identifier of the alarm to be updated.
   ///
-  /// Returns [true] when operation is successful or [false] when
-  /// an exception occured, or record identified with [alarmId] is not found.
+  /// Returns [true] when operation is successful or [false] otherwise.
   @override
-  Future<bool> setSecondsElapsed(int alarmId, int secondsElapsed) async {
+  Future<bool> markOpened(int alarmId) async {
     try {
       // first, validate that the record exists
       final found = await _alarmDao.findAlarmById(alarmId);
@@ -77,11 +74,14 @@ class LocalAlarmRepository implements AlarmRepository {
         return false;
       }
 
+      // difference between time of alarm creation and current time
+      final difference = found.scheduledFor.difference(DateTime.now());
+
       // then, we update the record in the database
       final updateRecord = AlarmModel(
         id: found.id,
         scheduledFor: found.scheduledFor,
-        secondElapsed: secondsElapsed,
+        secondElapsed: difference.inSeconds,
       );
       final res = await _alarmDao.updateAlarm(updateRecord);
 
