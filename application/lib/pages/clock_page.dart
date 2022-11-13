@@ -10,8 +10,12 @@ class ClockPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Clock page'),
       ),
-      body: const Center(
-        child: AnalogClockWidget(),
+      body: Center(
+        child: AnalogClockWidget(
+          onTimeUpdated: (date) {
+            debugPrint(date.toIso8601String());
+          },
+        ),
       ),
     );
   }
