@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  alarm:
+    path: ../alarm
   analog_clock: 
     path: ../analog_clock
   cupertino_icons: ^1.0.2
