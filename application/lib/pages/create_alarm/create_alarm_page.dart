@@ -24,7 +24,7 @@ class CreateAlarmPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_) => const AlarmHistoryPage(),
+                  builder: (_) => const AlarmHistoryPageWrapper(),
                 ),
               );
             },

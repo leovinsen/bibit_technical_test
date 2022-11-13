@@ -41,7 +41,7 @@ void main() async {
             // then redirect user to history page once it's successful
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const AlarmHistoryPage(),
+                builder: (_) => const AlarmHistoryPageWrapper(),
               ),
             );
           });
