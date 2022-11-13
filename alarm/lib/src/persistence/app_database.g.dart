@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: library_private_types_in_public_api
-
 part of 'app_database.dart';
 
 // **************************************************************************
@@ -135,6 +133,17 @@ class _$AlarmDao extends AlarmDao {
   final InsertionAdapter<AlarmModel> _alarmModelInsertionAdapter;
 
   final UpdateAdapter<AlarmModel> _alarmModelUpdateAdapter;
+
+  @override
+  Future<AlarmModel?> findAlarmById(int id) async {
+    return _queryAdapter.query('SELECT * FROM `alarms` WHERE `id` = ?1',
+        mapper: (Map<String, Object?> row) => AlarmModel(
+            id: row['id'] as int?,
+            scheduledFor:
+                _dateTimeConverter.decode(row['scheduled_for'] as int),
+            secondElapsed: row['seconds_elapsed'] as int?),
+        arguments: [id]);
+  }
 
   @override
   Future<List<AlarmModel>> getAlarms() async {
