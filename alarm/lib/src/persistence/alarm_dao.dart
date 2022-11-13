@@ -1,0 +1,21 @@
+import 'package:floor/floor.dart';
+
+import 'alarm_model.dart';
+
+/// Data Access Object for interacting with `alarms` table.
+@dao
+abstract class AlarmDao {
+  /// Returns all alarms in the database, ordered by `scheduled_for` column descending.
+  @Query('SELECT * FROM `alarms` ORDER BY `scheduled_for` DESC')
+  Future<List<AlarmModel>> getAlarms();
+
+  /// Inserts a new alarm record into the database.
+  /// Returns the number of new records created by this operation.
+  @insert
+  Future<int> insertAlarm(AlarmModel alarm);
+
+  /// Updates an alarm record in the database.
+  /// Returns the number of records updated by this operation.
+  @update
+  Future<int> updateAlarm(AlarmModel alarm);
+}
