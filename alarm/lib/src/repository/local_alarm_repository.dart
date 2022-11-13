@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:notification/notification.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../persistence/persistence.dart';
 import 'alarm_repository.dart';
@@ -6,9 +8,10 @@ import 'alarm_repository.dart';
 /// an [AlarmRepository] that uses local storage (SQLite) for managing
 /// alarm metadata.
 class LocalAlarmRepository implements AlarmRepository {
-  LocalAlarmRepository(this._alarmDao);
+  LocalAlarmRepository(this._alarmDao, this._notificationService);
 
   final AlarmDao _alarmDao;
+  final NotificationService _notificationService;
 
   /// Returns all alarms in the database sorted from the most recently created.
   ///
@@ -32,11 +35,22 @@ class LocalAlarmRepository implements AlarmRepository {
   @override
   Future<bool> scheduleAlarm(DateTime time) async {
     try {
-      // TODO: schedule the notification
+      // first, insert the record
       final alarm = AlarmModel(scheduledFor: time.toLocal());
-      final res = await _alarmDao.insertAlarm(alarm);
+      final insertedId = await _alarmDao.insertAlarm(alarm);
 
-      return res > 0;
+      // if the insertion failed, the notification will not be scheduled.
+      // so at this point, once we are sure insertion was successful,
+      // we schedule the notification.
+      _notificationService.scheduleNotification(
+        insertedId,
+        'Alarm',
+        'Tap on the notification to dismiss!',
+        tz.TZDateTime.from(time, tz.local),
+        insertedId.toString(),
+      );
+
+      return true;
     } catch (e) {
       // Normally we should handle this properly, but skipping for simplicity.
       debugPrint(e.toString());
