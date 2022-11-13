@@ -11,10 +11,13 @@ class CreateAlarmPageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CreateAlarmCubit>(
-      create: (_) {
+      create: (context) {
         final initialTime = DateTime.now();
 
-        return CreateAlarmCubit(initialTime: initialTime);
+        return CreateAlarmCubit(
+          initialTime: initialTime,
+          alarmRepository: context.read<AlarmRepository>(),
+        );
       },
       child: const CreateAlarmPage(),
     );
