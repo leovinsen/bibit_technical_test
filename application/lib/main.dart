@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notification/notification.dart';
 
+import 'pages/alarm_history/alarm_history_page.dart';
 import 'pages/create_alarm/create_alarm_page.dart';
 
 void main() async {
@@ -26,8 +27,24 @@ void main() async {
           notificationService,
         );
 
-        notificationService.initialize((response) {
-          // TODO: handle callback
+        notificationService.initialize((response) async {
+          // only handle notifications with a paylod
+          if (response.payload == null) return;
+
+          final alarmId = int.tryParse(response.payload!);
+
+          // terminate if payload is malformed
+          if (alarmId == null) return;
+
+          // mark the alarm as opened
+          repository.markOpened(alarmId).then((_) {
+            // then redirect user to history page once it's successful
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const AlarmHistoryPage(),
+              ),
+            );
+          });
         });
 
         return repository;
