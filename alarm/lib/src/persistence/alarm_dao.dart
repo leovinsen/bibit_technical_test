@@ -15,7 +15,7 @@ abstract class AlarmDao {
   Future<List<AlarmModel>> getAlarms();
 
   /// Inserts a new alarm record into the database.
-  /// Returns the number of new records created by this operation.
+  /// Returns the ID of the inserted record.
   @insert
   Future<int> insertAlarm(AlarmModel alarm);
 
