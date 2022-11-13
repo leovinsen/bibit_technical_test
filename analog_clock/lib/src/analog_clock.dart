@@ -9,10 +9,19 @@ import 'constants.dart';
 class AnalogClockWidget extends StatefulWidget {
   const AnalogClockWidget({
     super.key,
-    required this.onTimeUpdated,
+    required this.onHourUpdated,
+    required this.onMinuteUpdated,
+    required this.onSecondUpdated,
   });
 
-  final Function(DateTime) onTimeUpdated;
+  /// triggered when the hour clock hand is moved around.
+  final Function(int) onHourUpdated;
+
+  /// triggered when the minute clock hand is moved around.
+  final Function(int) onMinuteUpdated;
+
+  /// triggered when the second clock hand is moved around.
+  final Function(int) onSecondUpdated;
 
   @override
   State<AnalogClockWidget> createState() => _AnalogClockWidgetState();
@@ -66,7 +75,7 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
                       _panUpdateIntoMinutesOrSeconds(details, offset),
                     );
 
-                    widget.onTimeUpdated(_clockTime);
+                    widget.onMinuteUpdated(_clockTime.second);
                   });
                 },
               ),
@@ -87,7 +96,7 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
                     );
                   });
 
-                  widget.onTimeUpdated(_clockTime);
+                  widget.onMinuteUpdated(_clockTime.minute);
                 },
               ),
               ClockHand(
@@ -107,7 +116,7 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
                     );
                   });
 
-                  widget.onTimeUpdated(_clockTime);
+                  widget.onHourUpdated(_clockTime.hour);
                 },
               ),
             ],

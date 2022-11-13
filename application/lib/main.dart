@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/clock_page.dart';
+import 'pages/create_alarm/create_alarm_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ClockPage(),
+      home: const CreateAlarmPageWrapper(),
     );
   }
 }
