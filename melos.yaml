@@ -6,6 +6,7 @@ packages:
   - alarm/*
   - analog_clock/*
   - application/*
+  - notification/*
   
 scripts:
   get:
