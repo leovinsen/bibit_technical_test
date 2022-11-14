@@ -14,22 +14,7 @@ class AlarmHistoryCubit extends Cubit<AlarmHistoryState> {
   Future<void> fetchAlarms() async {
     emit(const AlarmHistoryLoading());
     try {
-      // fetch only alarms that has been opened
-      // final alarms = await _alarmRepository.getAlarms();
-      final alarms = <AlarmModel>[
-        AlarmModel(
-          scheduledFor: DateTime.now(),
-          secondElapsed: 40,
-        ),
-        AlarmModel(
-          scheduledFor: DateTime.now(),
-          secondElapsed: 60,
-        ),
-        AlarmModel(
-          scheduledFor: DateTime.now(),
-          secondElapsed: 80,
-        ),
-      ];
+      final alarms = await _alarmRepository.getAlarms();
 
       emit(AlarmHistoryLoaded(alarms));
     } catch (e) {
