@@ -154,6 +154,11 @@ class _$AlarmDao extends AlarmDao {
   }
 
   @override
+  Future<void> deleteAlarms() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM `alarms`');
+  }
+
+  @override
   Future<int> insertAlarm(AlarmModel alarm) {
     return _alarmModelInsertionAdapter.insertAndReturnId(
         alarm, OnConflictStrategy.abort);

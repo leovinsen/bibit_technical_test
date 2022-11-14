@@ -95,4 +95,17 @@ class LocalAlarmRepository implements AlarmRepository {
       return false;
     }
   }
+
+  @override
+  Future<bool> clearAlarms() async {
+    try {
+      await _alarmDao.deleteAlarms();
+
+      return true;
+    } catch (e) {
+      // Normally we should handle this properly, but skipping for simplicity.
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }

@@ -26,4 +26,7 @@ abstract class AlarmDao {
   /// Returns the number of records updated by this operation.
   @update
   Future<int> updateAlarm(AlarmModel alarm);
+
+  @Query('DELETE FROM `alarms`')
+  Future<void> deleteAlarms();
 }

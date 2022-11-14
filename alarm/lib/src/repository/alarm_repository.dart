@@ -18,4 +18,9 @@ abstract class AlarmRepository {
   ///
   /// Returns [true] when operation is successful or [false] otherwise.
   Future<bool> markOpened(int alarmId);
+
+  /// Clears all alarm metadata.
+  ///
+  /// Returns [true] when operation is successful or [false] otherwise.
+  Future<bool> clearAlarms();
 }
