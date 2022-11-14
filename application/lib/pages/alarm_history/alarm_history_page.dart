@@ -8,6 +8,13 @@ import '../../blocs/alarm_history/alarm_history_cubit.dart';
 
 part 'wrapper.dart';
 
+/// Displays a [BarChart] that shows:
+/// - creation time of [AlarmModel] on the x-axis
+/// - time taken (in seconds) by the user to tap on the alarm on the y-axis.
+/// If there is no alarm history, an error message will be shown instead.
+///
+/// On the top right of the page, an [IconButton] with a trash bin icon is shown.
+/// When tapped, it will clear all alarm history by calling [AlarmHistoryCubit.clearHistory].
 class AlarmHistoryPage extends StatelessWidget {
   const AlarmHistoryPage({
     Key? key,
@@ -78,6 +85,7 @@ class AlarmHistoryPage extends StatelessWidget {
     );
   }
 
+  /// Maps [alarms] into a list of bar metadata for [BarChart].
   List<BarChartGroupData> _alarmToGroupData(List<AlarmModel> alarms) {
     final groups = <BarChartGroupData>[];
     for (int i = 0; i < alarms.length; i++) {
@@ -127,13 +135,16 @@ class AlarmHistoryPage extends StatelessWidget {
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
+            reservedSize: 30,
             showTitles: true,
             interval: 10,
             getTitlesWidget: (value, meta) {
               return Text(
                 value.toInt().toString(),
-                style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
               );
             },
           ),
@@ -152,6 +163,8 @@ class AlarmHistoryPage extends StatelessWidget {
         ),
       );
 
+  /// Returns the highest seconds elapsed value from [alarms].
+  /// Used for determining the upper bound of y-axis for the bar chart.
   double getMaxSecondsElapsed(List<AlarmModel> alarms) {
     double max = 0;
 

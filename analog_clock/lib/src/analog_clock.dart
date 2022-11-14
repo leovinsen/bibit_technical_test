@@ -6,6 +6,10 @@ import 'clock_face.dart';
 import 'clock_hand.dart';
 import 'constants.dart';
 
+/// An analog clock widget that can be interacted with. Defaults to current time
+/// for the initially shown time on the clock.
+///
+/// Contains a clock face and three hands for hours, minutes, and seconds.
 class AnalogClockWidget extends StatefulWidget {
   const AnalogClockWidget({
     super.key,
@@ -32,11 +36,12 @@ class AnalogClockWidget extends StatefulWidget {
 }
 
 class _AnalogClockWidgetState extends State<AnalogClockWidget> {
-  // length is relative to radius of the clock
+  /// length is relative to radius of the clock.
   static const handsLengthSecondsFraction = 0.85;
   static const handsLengthMinutesFraction = 0.6;
   static const handsLengthHoursFraction = 0.4;
 
+  /// determines the thickness of each clock hand.
   static const handsThicknessSeconds = 6.0;
   static const handsThicknessMinutes = 8.0;
   static const handsThicknessHours = 12.0;
@@ -63,6 +68,8 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
         alignment: Alignment.center,
         children: [
           const SizedBox.expand(child: ClockFace()),
+
+          // Hours clock hand
           ClockHand(
             color: Colors.red,
             angleRadians: _clockTime.second * radiansPerTick,
@@ -83,6 +90,8 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
               });
             },
           ),
+
+          // Minutes clock hand
           ClockHand(
             color: Colors.black,
             angleRadians: _clockTime.minute * radiansPerTick,
@@ -103,6 +112,8 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
               widget.onMinuteUpdated(_clockTime.minute);
             },
           ),
+
+          // Seconds clock hand
           ClockHand(
             color: Colors.black,
             angleRadians: _clockTime.hour * radiansPerHour,

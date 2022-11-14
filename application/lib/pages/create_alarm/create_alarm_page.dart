@@ -12,6 +12,12 @@ import '../alarm_history/alarm_history_page.dart';
 
 part 'wrapper.dart';
 
+/// From top to bottom:
+/// - An [AnalogClockWidget] that can be interacted with to set time for the alarm.
+/// - The currently set [DateTime] value for the alarm.
+/// - An AM/PM toggle.
+/// - A submit button. When tapped, will create a new alarm by calling
+/// [CreateAlarmCubit.createAlarm].
 class CreateAlarmPage extends StatefulWidget {
   const CreateAlarmPage({
     Key? key,
@@ -22,6 +28,9 @@ class CreateAlarmPage extends StatefulWidget {
 }
 
 class _CreateAlarmPageState extends State<CreateAlarmPage> {
+  /// Initialize local notifications when page is first opened.
+  /// This is possible because CreateAlarmPage will be opened only once,
+  /// which is during app cold start.
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -55,6 +64,7 @@ class _CreateAlarmPageState extends State<CreateAlarmPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // The analog clock widget
                 AnalogClockWidget(
                   onHourUpdated: (hour) {
                     cubit.setHour(hour);
@@ -67,6 +77,8 @@ class _CreateAlarmPageState extends State<CreateAlarmPage> {
                   },
                 ),
                 const SizedBox(height: 20),
+
+                // Displays currently selected time
                 Text(
                   timeFormatter.format(state.selectedTime),
                   style: const TextStyle(
@@ -75,6 +87,8 @@ class _CreateAlarmPageState extends State<CreateAlarmPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
+
+                // Toggle for switching betweenn AM/PM
                 ToggleSwitch(
                   minWidth: 90.0,
                   initialLabelIndex: state.timeType.index,
@@ -95,6 +109,8 @@ class _CreateAlarmPageState extends State<CreateAlarmPage> {
                   },
                 ),
                 const SizedBox(height: 20),
+
+                // Button for creating a new alarm.
                 ElevatedButton(
                   child: const Text('Submit'),
                   onPressed: () {
@@ -109,6 +125,7 @@ class _CreateAlarmPageState extends State<CreateAlarmPage> {
     );
   }
 
+  /// Call this only once to set up notifications callback.
   void _initializeNotifications() {
     final alarmRepository = context.read<AlarmRepository>();
     final notificationService = context.read<NotificationService>();
