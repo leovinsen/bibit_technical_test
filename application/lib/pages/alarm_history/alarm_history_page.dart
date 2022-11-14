@@ -108,7 +108,7 @@ class AlarmHistoryPage extends StatelessWidget {
               final alarm = alarms[value.floor()];
 
               final dateFormatter = DateFormat('dd MMM');
-              final timeFormatter = DateFormat('hh:mm:ss');
+              final timeFormatter = DateFormat('HH:mm:ss');
 
               final text =
                   '${dateFormatter.format(alarm.scheduledFor)}\n${timeFormatter.format(alarm.scheduledFor)}';
