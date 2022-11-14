@@ -2,6 +2,7 @@ import 'package:alarm/alarm.dart';
 import 'package:analog_clock/analog_clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../blocs/create_alarm/create_alarm_cubit.dart';
@@ -35,6 +36,8 @@ class CreateAlarmPage extends StatelessWidget {
       ),
       body: BlocBuilder<CreateAlarmCubit, CreateAlarmState>(
         builder: (context, state) {
+          final timeFormatter = DateFormat('hh:mm:ss');
+
           final cubit = context.read<CreateAlarmCubit>();
           return Center(
             child: Column(
@@ -51,9 +54,14 @@ class CreateAlarmPage extends StatelessWidget {
                     cubit.setSecond(second);
                   },
                 ),
-                const SizedBox(height: 60),
-                // TODO: apply date formatting
-                Text(state.selectedTime.toIso8601String()),
+                const SizedBox(height: 20),
+                Text(
+                  timeFormatter.format(state.selectedTime),
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 const SizedBox(height: 20),
                 ToggleSwitch(
                   minWidth: 90.0,
