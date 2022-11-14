@@ -50,79 +50,75 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
     final dyOffset = MediaQuery.of(context).size.height / 2;
     final offset = Offset(dxOffset, dyOffset);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Container(
-          alignment: Alignment.center,
-          width: 250,
-          height: 250,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              ClockHand(
-                color: Colors.red,
-                angleRadians: _clockTime.second * radiansPerTick,
-                length: handsLengthSeconds,
-                thickness: handsThicknessSeconds,
-                onPanUpdate: (details) {
-                  setState(() {
-                    _clockTime = DateTime(
-                      _clockTime.year,
-                      _clockTime.month,
-                      _clockTime.day,
-                      _clockTime.hour,
-                      _clockTime.minute,
-                      _panUpdateIntoMinutesOrSeconds(details, offset),
-                    );
+    return Container(
+      alignment: Alignment.center,
+      width: 250,
+      height: 250,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ClockHand(
+            color: Colors.red,
+            angleRadians: _clockTime.second * radiansPerTick,
+            length: handsLengthSeconds,
+            thickness: handsThicknessSeconds,
+            onPanUpdate: (details) {
+              setState(() {
+                _clockTime = DateTime(
+                  _clockTime.year,
+                  _clockTime.month,
+                  _clockTime.day,
+                  _clockTime.hour,
+                  _clockTime.minute,
+                  _panUpdateIntoMinutesOrSeconds(details, offset),
+                );
 
-                    widget.onMinuteUpdated(_clockTime.second);
-                  });
-                },
-              ),
-              ClockHand(
-                color: Colors.black,
-                angleRadians: _clockTime.minute * radiansPerTick,
-                length: handsLengthMinutes,
-                thickness: handsThicknessMinutes,
-                onPanUpdate: (details) {
-                  setState(() {
-                    _clockTime = DateTime(
-                      _clockTime.year,
-                      _clockTime.month,
-                      _clockTime.day,
-                      _clockTime.hour,
-                      _panUpdateIntoMinutesOrSeconds(details, offset),
-                      _clockTime.second,
-                    );
-                  });
-
-                  widget.onMinuteUpdated(_clockTime.minute);
-                },
-              ),
-              ClockHand(
-                color: Colors.black,
-                angleRadians: _clockTime.hour * radiansPerHour,
-                length: handsLengthHours,
-                thickness: handsThicknessHours,
-                onPanUpdate: (details) {
-                  setState(() {
-                    _clockTime = DateTime(
-                      _clockTime.year,
-                      _clockTime.month,
-                      _clockTime.day,
-                      _panUpdateIntoHours(details, offset),
-                      _clockTime.minute,
-                      _clockTime.second,
-                    );
-                  });
-
-                  widget.onHourUpdated(_clockTime.hour);
-                },
-              ),
-            ],
+                widget.onMinuteUpdated(_clockTime.second);
+              });
+            },
           ),
-        );
-      },
+          ClockHand(
+            color: Colors.black,
+            angleRadians: _clockTime.minute * radiansPerTick,
+            length: handsLengthMinutes,
+            thickness: handsThicknessMinutes,
+            onPanUpdate: (details) {
+              setState(() {
+                _clockTime = DateTime(
+                  _clockTime.year,
+                  _clockTime.month,
+                  _clockTime.day,
+                  _clockTime.hour,
+                  _panUpdateIntoMinutesOrSeconds(details, offset),
+                  _clockTime.second,
+                );
+              });
+
+              widget.onMinuteUpdated(_clockTime.minute);
+            },
+          ),
+          ClockHand(
+            color: Colors.black,
+            angleRadians: _clockTime.hour * radiansPerHour,
+            length: handsLengthHours,
+            thickness: handsThicknessHours,
+            onPanUpdate: (details) {
+              setState(() {
+                _clockTime = DateTime(
+                  _clockTime.year,
+                  _clockTime.month,
+                  _clockTime.day,
+                  _panUpdateIntoHours(details, offset),
+                  _clockTime.minute,
+                  _clockTime.second,
+                );
+              });
+
+              widget.onHourUpdated(_clockTime.hour);
+            },
+          ),
+        ],
+      ),
     );
   }
 
