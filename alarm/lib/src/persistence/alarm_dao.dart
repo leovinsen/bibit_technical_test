@@ -11,8 +11,10 @@ abstract class AlarmDao {
   Future<AlarmModel?> findAlarmById(int id);
 
   /// Returns all alarms in the database, ordered by `scheduled_for` column descending.
-  @Query('SELECT * FROM `alarms` ORDER BY `scheduled_for` DESC')
-  Future<List<AlarmModel>> getAlarms();
+  ///
+  /// set [pageSize] to determine the amount of records fetched in a single query.
+  @Query('SELECT * FROM `alarms` ORDER BY `scheduled_for` DESC LIMIT :pageSize')
+  Future<List<AlarmModel>> getAlarms(int pageSize);
 
   /// Inserts a new alarm record into the database.
   /// Returns the ID of the inserted record.

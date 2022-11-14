@@ -10,6 +10,9 @@ import 'alarm_repository.dart';
 class LocalAlarmRepository implements AlarmRepository {
   LocalAlarmRepository(this._alarmDao, this._notificationService);
 
+  /// returns only 5 alarm records by default
+  static const defaultPageSize = 5;
+
   final AlarmDao _alarmDao;
   final NotificationService _notificationService;
 
@@ -19,7 +22,7 @@ class LocalAlarmRepository implements AlarmRepository {
   @override
   Future<List<AlarmModel>> getAlarms() async {
     try {
-      return _alarmDao.getAlarms();
+      return _alarmDao.getAlarms(defaultPageSize);
     } catch (e) {
       // Normally we should handle this properly, but skipping for simplicity.
       debugPrint(e.toString());
