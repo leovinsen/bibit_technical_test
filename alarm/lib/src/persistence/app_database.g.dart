@@ -148,12 +148,8 @@ class _$AlarmDao extends AlarmDao {
   @override
   Future<List<AlarmModel>> getAlarms(int pageSize) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM `alarms` ORDER BY `scheduled_for` DESC LIMIT ?1',
-        mapper: (Map<String, Object?> row) => AlarmModel(
-            id: row['id'] as int?,
-            scheduledFor:
-                _dateTimeConverter.decode(row['scheduled_for'] as int),
-            secondElapsed: row['seconds_elapsed'] as int?),
+        'SELECT * FROM `alarms` WHERE `seconds_elapsed` IS NOT NULL ORDER BY `scheduled_for` DESC LIMIT ?1',
+        mapper: (Map<String, Object?> row) => AlarmModel(id: row['id'] as int?, scheduledFor: _dateTimeConverter.decode(row['scheduled_for'] as int), secondElapsed: row['seconds_elapsed'] as int?),
         arguments: [pageSize]);
   }
 

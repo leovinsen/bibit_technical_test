@@ -13,7 +13,8 @@ abstract class AlarmDao {
   /// Returns all alarms in the database, ordered by `scheduled_for` column descending.
   ///
   /// set [pageSize] to determine the amount of records fetched in a single query.
-  @Query('SELECT * FROM `alarms` ORDER BY `scheduled_for` DESC LIMIT :pageSize')
+  @Query('SELECT * FROM `alarms` WHERE `seconds_elapsed` IS NOT NULL'
+      ' ORDER BY `scheduled_for` DESC LIMIT :pageSize')
   Future<List<AlarmModel>> getAlarms(int pageSize);
 
   /// Inserts a new alarm record into the database.
