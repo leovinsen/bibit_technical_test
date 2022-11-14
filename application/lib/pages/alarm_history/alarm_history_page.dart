@@ -44,6 +44,7 @@ class AlarmHistoryPage extends StatelessWidget {
               }
 
               final data = BarChartData(
+                maxY: getMaxSecondsElapsed(state.alarms),
                 borderData: FlBorderData(show: false),
                 backgroundColor: Colors.blueGrey,
                 gridData: FlGridData(
@@ -127,7 +128,7 @@ class AlarmHistoryPage extends StatelessWidget {
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            interval: 20,
+            interval: 10,
             getTitlesWidget: (value, meta) {
               return Text(
                 value.toInt().toString(),
@@ -150,4 +151,22 @@ class AlarmHistoryPage extends StatelessWidget {
           ),
         ),
       );
+
+  double getMaxSecondsElapsed(List<AlarmModel> alarms) {
+    double max = 0;
+
+    for (final al in alarms) {
+      final secsElapsed = al.secondElapsed ?? 0;
+      if (secsElapsed > max) {
+        max = secsElapsed.toDouble();
+      }
+    }
+
+    // cap it at 100
+    if (max > 100) {
+      return 100;
+    }
+
+    return max;
+  }
 }
