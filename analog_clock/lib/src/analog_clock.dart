@@ -2,17 +2,21 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'clock_face.dart';
 import 'clock_hand.dart';
 import 'constants.dart';
 
-// TODO: apply some polish (e.g. clock face)
 class AnalogClockWidget extends StatefulWidget {
   const AnalogClockWidget({
     super.key,
+    this.size = 300.0,
     required this.onHourUpdated,
     required this.onMinuteUpdated,
     required this.onSecondUpdated,
   });
+
+  /// Size of the whole clock widget.
+  final double size;
 
   /// triggered when the hour clock hand is moved around.
   final Function(int) onHourUpdated;
@@ -28,9 +32,10 @@ class AnalogClockWidget extends StatefulWidget {
 }
 
 class _AnalogClockWidgetState extends State<AnalogClockWidget> {
-  static const handsLengthSeconds = 160.0;
-  static const handsLengthMinutes = 130.0;
-  static const handsLengthHours = 100.0;
+  // length is relative to radius of the clock
+  static const handsLengthSecondsFraction = 0.85;
+  static const handsLengthMinutesFraction = 0.6;
+  static const handsLengthHoursFraction = 0.4;
 
   static const handsThicknessSeconds = 6.0;
   static const handsThicknessMinutes = 8.0;
@@ -52,15 +57,16 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
 
     return Container(
       alignment: Alignment.center,
-      width: 250,
-      height: 250,
+      width: 300,
+      height: 300,
       child: Stack(
         alignment: Alignment.center,
         children: [
+          const SizedBox.expand(child: ClockFace()),
           ClockHand(
             color: Colors.red,
             angleRadians: _clockTime.second * radiansPerTick,
-            length: handsLengthSeconds,
+            length: widget.size / 2 * handsLengthSecondsFraction,
             thickness: handsThicknessSeconds,
             onPanUpdate: (details) {
               setState(() {
@@ -80,7 +86,7 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
           ClockHand(
             color: Colors.black,
             angleRadians: _clockTime.minute * radiansPerTick,
-            length: handsLengthMinutes,
+            length: widget.size / 2 * handsLengthMinutesFraction,
             thickness: handsThicknessMinutes,
             onPanUpdate: (details) {
               setState(() {
@@ -100,7 +106,7 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
           ClockHand(
             color: Colors.black,
             angleRadians: _clockTime.hour * radiansPerHour,
-            length: handsLengthHours,
+            length: widget.size / 2 * handsLengthHoursFraction,
             thickness: handsThicknessHours,
             onPanUpdate: (details) {
               setState(() {
