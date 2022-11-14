@@ -84,7 +84,7 @@ class LocalAlarmRepository implements AlarmRepository {
       final updateRecord = AlarmModel(
         id: found.id,
         scheduledFor: found.scheduledFor,
-        secondElapsed: difference.inSeconds,
+        secondElapsed: difference.inSeconds.abs(),
       );
       final res = await _alarmDao.updateAlarm(updateRecord);
 
