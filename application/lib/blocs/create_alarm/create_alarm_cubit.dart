@@ -69,7 +69,8 @@ class CreateAlarmCubit extends Cubit<CreateAlarmState> {
     late DateTime scheduledTime;
 
     if (state.timeType == TimeType.pm) {
-      scheduledTime = state.selectedTime.add(const Duration(hours: 12));
+      scheduledTime =
+          state.selectedTime.add(const Duration(hours: 12)).toLocal();
     } else {
       scheduledTime = state.selectedTime.toLocal();
     }
