@@ -2,6 +2,8 @@
 
 This project is dedicated for solving Flutter Engineer Test Assignment at Stockbit & Bibit.id.
 
+See the following [YouTube playlist](https://www.youtube.com/playlist?list=PLuIivo2SM9QZ-H_6auerE4ObEv6zlHTgj) for quick explanation of the app.
+
 ## Directory Structure
 
 ```
