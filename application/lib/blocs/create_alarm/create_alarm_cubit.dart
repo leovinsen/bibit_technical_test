@@ -81,16 +81,5 @@ class CreateAlarmCubit extends Cubit<CreateAlarmState> {
       debugPrint('failed to schedule alarm');
       return;
     }
-
-    // reset clock after a successful scheduled alarm.
-    final DateTime now = DateTime.now();
-    emit(
-      CreateAlarmState(
-        selectedHour: now.hour % 12,
-        selectedMinute: now.minute,
-        selectedSecond: now.second,
-        timeType: now.hour > 12 ? TimeType.pm : TimeType.am,
-      ),
-    );
   }
 }
