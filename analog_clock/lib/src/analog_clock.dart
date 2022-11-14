@@ -73,7 +73,7 @@ class _AnalogClockWidgetState extends State<AnalogClockWidget> {
                   _panUpdateIntoMinutesOrSeconds(details, offset),
                 );
 
-                widget.onMinuteUpdated(_clockTime.second);
+                widget.onSecondUpdated(_clockTime.second);
               });
             },
           ),
