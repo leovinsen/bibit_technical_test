@@ -2,6 +2,7 @@ import 'package:alarm/alarm.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../blocs/alarm_history/alarm_history_cubit.dart';
 
@@ -98,8 +99,19 @@ class AlarmHistoryPage extends StatelessWidget {
             getTitlesWidget: (value, meta) {
               final alarm = alarms[value.floor()];
 
-              // TODO: apply date formatting
-              return Text(alarm.scheduledFor.toIso8601String());
+              final dateFormatter = DateFormat('dd MMM');
+              final timeFormatter = DateFormat('hh:mm:ss');
+
+              final text =
+                  '${dateFormatter.format(alarm.scheduledFor)}\n${timeFormatter.format(alarm.scheduledFor)}';
+              return Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              );
             },
             reservedSize: 38,
           ),
