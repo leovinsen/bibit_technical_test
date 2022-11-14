@@ -18,6 +18,14 @@ class AlarmHistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Alarm history'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              context.read<AlarmHistoryCubit>().clearHistory();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: BlocBuilder<AlarmHistoryCubit, AlarmHistoryState>(
