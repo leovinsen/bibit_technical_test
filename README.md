@@ -36,7 +36,14 @@ $ fvm install
 $ melos bootstrap
 ```
 
-If you do not have FVM or Melos installed on your machine, please refer to the [FVM official docs](https://fvm.app/) and [Melos official docs](https://melos.invertase.dev/). 
+If you do not have FVM or Melos installed on your machine, you can run the following commands:
+
+```
+$ dart pub global activate fvm 
+$ dart pub global activate melos
+```
+
+For more information please refer to [FVM official docs](https://fvm.app/) and [Melos official docs](https://melos.invertase.dev/). 
 
 ## Running the app
 
