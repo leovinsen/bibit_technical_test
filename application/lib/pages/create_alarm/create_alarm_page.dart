@@ -3,6 +3,7 @@ import 'package:analog_clock/analog_clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:notification/notification.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../blocs/create_alarm/create_alarm_cubit.dart';
@@ -11,10 +12,21 @@ import '../alarm_history/alarm_history_page.dart';
 
 part 'wrapper.dart';
 
-class CreateAlarmPage extends StatelessWidget {
+class CreateAlarmPage extends StatefulWidget {
   const CreateAlarmPage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<CreateAlarmPage> createState() => _CreateAlarmPageState();
+}
+
+class _CreateAlarmPageState extends State<CreateAlarmPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initializeNotifications();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,5 +107,30 @@ class CreateAlarmPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _initializeNotifications() {
+    final alarmRepository = context.read<AlarmRepository>();
+    final notificationService = context.read<NotificationService>();
+
+    notificationService.initialize((response) async {
+      // only handle notifications with a paylod
+      if (response.payload == null) return;
+
+      final alarmId = int.tryParse(response.payload!);
+
+      // terminate if payload is malformed
+      if (alarmId == null) return;
+
+      // mark the alarm as opened
+      alarmRepository.markOpened(alarmId).then((_) {
+        // then redirect user to history page once it's successful
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const AlarmHistoryPageWrapper(),
+          ),
+        );
+      });
+    });
   }
 }
