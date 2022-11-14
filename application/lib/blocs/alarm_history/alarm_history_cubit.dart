@@ -15,8 +15,21 @@ class AlarmHistoryCubit extends Cubit<AlarmHistoryState> {
     emit(const AlarmHistoryLoading());
     try {
       // fetch only alarms that has been opened
-      final alarms = await _alarmRepository.getAlarms()
-        ..where((al) => al.secondElapsed != null);
+      // final alarms = await _alarmRepository.getAlarms();
+      final alarms = <AlarmModel>[
+        AlarmModel(
+          scheduledFor: DateTime.now(),
+          secondElapsed: 40,
+        ),
+        AlarmModel(
+          scheduledFor: DateTime.now(),
+          secondElapsed: 60,
+        ),
+        AlarmModel(
+          scheduledFor: DateTime.now(),
+          secondElapsed: 80,
+        ),
+      ];
 
       emit(AlarmHistoryLoaded(alarms));
     } catch (e) {

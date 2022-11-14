@@ -10,9 +10,12 @@ class AlarmHistoryPageWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AlarmHistoryCubit>(create: (_) {
-      final alarmRepository = context.read<AlarmRepository>();
-      return AlarmHistoryCubit(alarmRepository);
-    });
+    return BlocProvider<AlarmHistoryCubit>(
+      create: (_) {
+        final alarmRepository = context.read<AlarmRepository>();
+        return AlarmHistoryCubit(alarmRepository)..fetchAlarms();
+      },
+      child: const AlarmHistoryPage(),
+    );
   }
 }
